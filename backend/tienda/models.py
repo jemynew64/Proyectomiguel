@@ -41,6 +41,7 @@ class Product(models.Model):
     
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product, through='CartItem')  # Relación ManyToMany
 
 #tabla intermedia 
 class CartItem(models.Model):

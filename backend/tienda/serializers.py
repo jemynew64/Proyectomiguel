@@ -1,8 +1,36 @@
 from rest_framework import serializers
-from .models import Product, Cart, CartItem
-from django.contrib.auth.models import User
+from .models import *
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.validators import UniqueValidator
+
+class UserProfileSerializer(serializers.ModelSerializer):
+        
+    class Meta:
+        model = UserProfile
+        fields = '__all__'
+
+class CategorySerializer(serializers.ModelSerializer):
+        
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+class ProductSerializer(serializers.ModelSerializer):
+        
+    class Meta:
+        model = Product
+        fields = '__all__'
+        
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = '__all__'
+        
+class CartItemProfileSerializer(serializers.ModelSerializer):
+        
+    class Meta:
+        model = CartItem
+        fields = '__all__'
 
 class RegisterSerializer(serializers.ModelSerializer):
     #validando el email si esta bien echo
@@ -39,4 +67,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         #aca maneja el hashin de la contraseña y le pone un password al objeto
         user.set_password(validated_data['password'])
         user.save()
+        
+        # Crear un carrito para el usuario recién creado
+        #Cart.objects.create(user=user)
+
         return user
